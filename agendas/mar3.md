@@ -53,6 +53,5 @@ Delegate who does what (spin the wheel (?))
 - Spearman rank graph
 
 ## Questions 
-- Help with PICRUSt2 D;
 
 
