@@ -18,7 +18,8 @@ Research Question:
 - Aim 2: Taxonomy bar plot, core microbiome, differential abundance
 - Aim 3: PICRUSt2/ggpicrust
 - Aim 4: Spearman correlation
-#### Delegate who does what (spin the wheel (?))
+
+Delegate who does what (spin the wheel (?))
 
 ## Proposal Writing 
 - Intro & Background: Gina, Annabel, Vanessa
