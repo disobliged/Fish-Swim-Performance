@@ -7,7 +7,7 @@ Research Question:
 - Fix Aims, Clarify any proposal questions
 
 ## Aims
-- Aim 1: Determine whether hindgut microbiome alpha and beta diversity differ across fish with contrasting swimming performance and preferred water depth, and whether these diversity metrics correlate with continuous swimming performance and preferred water depth.
+- Aim 1: Determine whether hindgut microbiome alpha and beta diversity differ across fish with contrasting swimming performance and preferred water depth, and whether these diversity metrics correlate with continuous preferred water depth.
 - Aim 2: Identify differences in core hindgut microbiota and differentially abundant taxa across fish of different swimming performance and water depth preference.
 - Aim 3: Determine whether PICRUSt2-predicted energy metabolism pathways are enriched in fish in fast swimmers and distinct water depth preferences.
 - Aim 4: Assess whether PICRUSt2-predicted energy metabolism pathways correlate with the taxa identified as differentially abundant.
