@@ -4,7 +4,7 @@ Research Question:
 
 ## Proposal Draft 
 
-- Fix Aims, Clarify Proposal 
+- Fix Aims, Clarify any proposal questions
 
 ## Aims
 - Aim 1: Determine whether hindgut microbiome alpha and beta diversity differ across fish with contrasting swimming performance and preferred water depth, and whether these diversity metrics correlate with continuous swimming performance and preferred water depth.
