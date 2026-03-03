@@ -42,7 +42,7 @@ Research Question:
 - Comparisons to make: either faster or slower vs. generalists
 - Volcano plot
 
-##### Aim3 
+##### Aim 3 
 - Same as 2 but filtered for high energy metabolites
 - Fast vs everything else, looking specifically at pathways with energy relevance 
 - *ID the paths of interest on the volcano plot 
