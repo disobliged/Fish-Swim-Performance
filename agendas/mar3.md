@@ -29,7 +29,7 @@ Delegate who does what (spin the wheel (?))
 - Workflow Overview/Timeline: Sam
 - References: Vanessa
 
-## Progress?
+## Timeline
 ![MICB 305 Gantt Chart](https://github.com/user-attachments/assets/6877efd0-50b7-4d0e-aa96-4021176a7bf5)
 
 ## Overview of Graphs by Aims (from last time)
