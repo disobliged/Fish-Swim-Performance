@@ -1,4 +1,4 @@
-# The Fish Microbiome and Swimming Performance
+# Exploring Hindgut Microbiome Composition and Predicted Energy Metabolism Pathways Across Fish with Contrasting Swimming Performance
 ![RStudio](https://img.shields.io/badge/RStudio-4285F4?style=for-the-badge&logo=rstudio&logoColor=white)
 ![R](https://img.shields.io/badge/r-%23276DC3.svg?style=for-the-badge&logo=r&logoColor=white)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
