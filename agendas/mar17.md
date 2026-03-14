@@ -28,9 +28,9 @@ Research Question:
 ### Action Items
 |Person|Task       |Done?|
 |:---: |:---:      |:---:|
-|IY    |PICRUSt2   |[ ]  |
+|IY    |Work on PICRUSt2   |[ ]  |
 |SD    |PICRUSt2 w/ stratification     |[ ]  |
 |SD    |Analyze core microbiome analysis     |[ ]  |
-|AL    |Differential Abundance  |[ ]  |
-|VH    |Taxonomy Bar Plot|[ ]  |
+|AL    |Differential Abundance Figure  |[ ]  |
+|VH    |Taxonomy Bar Plot Figure |[ ]  |
 |VX    |Analyze alpha and beta analysis |[ ]  |
