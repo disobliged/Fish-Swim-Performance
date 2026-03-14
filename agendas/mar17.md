@@ -19,9 +19,9 @@ Research Question:
 - PICRUSt2: Izaak 
 - PICRUSt2 w/ stratification: Sam
 
-## Alpha and Beta Diversity 
+## Alpha and Beta Diversity (Gina)
 
-## Core Microbiome 
+## Core Microbiome (Sam)
 
 ## Questions 
 
