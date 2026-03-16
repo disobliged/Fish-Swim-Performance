@@ -1,0 +1,139 @@
+---
+title: "Fish Alpha Diversity"
+output: html_document
+---
+# Alpha Diversity Plot
+
+The alpha diversity for this dataset will be calculated using the Shannon Index and compared pairwise using the Wilcoxon's ranked-sums test. This script will use the phyloseq object created previously.
+
+```{r Preliminary Data Analysis}
+# Set the seed
+set.seed(1)
+
+# View histogram
+hist(sample_sums(ps))
+
+### Rarefied phyloseq object
+
+# Find sampling depth
+# Run without labels to be able to view all curves
+rarecurve(
+  t(
+    data.frame(ps@otu_table)
+  ),
+  step=1000,
+  label = FALSE
+)
+
+### Rationale ###
+# I will use a sampling depth of 2525 based on the output of the rarecurve() function
+# and my results from Qiime.
+#################
+
+# Rarefy data
+psRare = ps %>% 
+  rarefy_even_depth(sample.size = 2525, rngseed = 1)
+
+table(sample_sums(psRare))
+```
+With the rarefied data, we can now calculate alpha diversity (Shannon) and Wilcoxon's test.
+
+```{r Alpha Diversity}
+# Calculate Shannon
+fishShannon = plot_richness(
+  psRare,
+  x = 'swim_performance',
+  measures = 'Shannon',
+  color = 'swim_performance'
+)
+
+# Make it publication-ready
+pData = fishShannon$data
+str(pData)
+
+fishFormatted = pData %>% 
+  ggplot(aes(swim_performance,value,fill = swim_performance))+
+  geom_boxplot(outlier.shape = NA)+
+  geom_jitter(height = 0,width = 0.2)+
+  theme_classic(base_size = 18)+
+  facet_wrap(~variable,ncol=7,scales = 'free_y')+
+  ylab('Alpha Diversity')+
+  xlab(NULL)+
+  theme(axis.text.x = element_text(angle = 45,vjust=1,hjust=1))+
+  labs(fill='Swim Performance')
+
+# Now add the Wilcoxon element
+comparisonsList = list(
+  # Accelerator
+  c('accelerator','burrowing'),
+  c('accelerator','crusier sprinter'),
+  c('accelerator','flow refuging'),
+  c('accelerator','generalist'),
+  c('accelerator','manoeuvrer'),
+  # Burrowing
+  c('burrowing','crusier sprinter'),
+  c('burrowing','flow refuging'),
+  c('burrowing','generalist'),
+  c('burrowing','manoeuvrer'),
+  # Crusier Sprinter
+  c('crusier sprinter','flow refuging'),
+  c('crusier sprinter','generalist'),
+  c('crusier sprinter','manoeuvrer'),
+  # Flow Refuging
+  c('flow refuging','generalist'),
+  c('flow refuging','manoeuvrer'),
+  # Generalist
+  c('generalist','manoeuvrer')
+)
+
+fishCompare = fishFormatted +
+  stat_compare_means(comparisons = comparisonsList, method = 'wilcox.test',size = 6)
+```
+
+The code above gives us a raw alpha diversity plot; ```fishCompare``` gives us a plot with p-values comparing all swim performances. We will simplify the plot by removing P-values that are above significance (P>0.05) to make the figure more publication-friendly.
+
+```{r Making It Clean}
+# Add on to fishFormatted from fishCompare
+
+cleanAlphaFish<-fishFormatted+
+  ylim(0,6.75)+
+  geom_signif(
+    comparison = list(
+      c('burrowing','flow refuging')),
+    y_position = c(
+      5.5
+    ),
+    annotations = c(
+      '*'
+    ),
+    textsize = 16
+  )+
+  scale_x_discrete(labels=
+    c(
+      'Accelerator',
+      'Burrowing',
+      'Crusier Sprinter',
+      'Flow Refuging',
+      'Generalist',
+      'Manoeuvrer'
+    )
+  )+
+  scale_fill_discrete(
+    labels=
+    c(
+      'Accelerator',
+      'Burrowing',
+      'Crusier Sprinter',
+      'Flow Refuging',
+      'Generalist',
+      'Manoeuvrer'
+    )
+  )
+```
+Now that we have a clean figure, we can export it as a ```.jpg```.
+
+```{r Export Figure}
+ggsave('alphaCleanFish.jpg',
+       plot = cleanAlphaFish,
+       height=8.5, width = 14)
+```
