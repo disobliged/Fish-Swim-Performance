@@ -2,6 +2,14 @@
 title: "Fish Alpha Diversity"
 output: html_document
 ---
+```{r Required Libraries}
+library(tidyverse)
+library(phyloseq)
+library(vegan)
+library(ggpubr)
+library(microbiome)
+library(indicspecies)
+```
 # Alpha Diversity Plot
 
 The alpha diversity for this dataset will be calculated using the Shannon Index and compared pairwise using the Wilcoxon's ranked-sums test. This script will use the phyloseq object created previously.
