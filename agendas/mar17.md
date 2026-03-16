@@ -25,6 +25,20 @@ Research Question:
 - Under plots
 ## Questions 
 
+## Manuscript Roles
+
+- Title: Sam
+- Abstract: Vanessa, Sam
+- Introduction: Vanessa, Sam
+- Methods & Materials: Izaak
+- Results/Figures/Captions: Everyone
+- Discussion: Gina
+- Limitations: Gina, Vanessa
+- Conclusion:
+- Future Directions:
+- Contributions: Sam
+- Acknowledgements: Sam
+
 ### Action Items
 |Person|Task       |Done?|
 |:---: |:---:      |:---:|
@@ -34,4 +48,5 @@ Research Question:
 |AL    |Differential Abundance Figure  |[ ]  |
 |VH    |Taxonomy Bar Plot Figure |[ ]  |
 |VX    |Analyze alpha and beta analysis |[ ]  |
+|Everyone    |Sign up for Manuscript Roles|[ ]  |
 |Everyone    |Organize Github|[ ]  |
