@@ -34,7 +34,7 @@ Research Question:
 - Results/Figures/Captions: Everyone
 - Discussion: Gina
 - Limitations: Gina, Vanessa
-- Conclusion:
+- Conclusion: Everyone, but one person writes to be cohesive
 - Future Directions:
 - Contributions: Sam
 - Acknowledgements: Sam
