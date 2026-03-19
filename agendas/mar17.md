@@ -1,8 +1,8 @@
-# Team 7 Meeting #9, March 17th, 2026, Minutes by SD 
+# Team 7 Meeting #9, March 17th, 2026
 Research Question:
 > Does hindgut microbial diversity, core microbiota, differentially abundant taxa and energy metabolic pathways correlate with swimming performance across fish species?
 
-## Manuscript Prep 
+## Manuscript Prep, Minutes by SD 
 
 - Look over analyses done thus far
 - Discuss about results
