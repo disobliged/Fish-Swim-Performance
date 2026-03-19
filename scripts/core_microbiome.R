@@ -14,6 +14,9 @@ ps = readRDS('ps_filtered.rds')
 ps = transform(ps, 'compositional')
 ps_genus = tax_glom(ps, 'Genus')
 
+# Filter to hindgut samples only 
+ps_genus_final = subset_samples(ps_genus, sample_type == "hindgut")
+
 # Subset your phyloseq object by swim performance group
 performance.fast = subset_samples(ps_genus_final, swim_performance %in% c('accelerator', 'crusier sprinter', 'manoeuvrer'))
 performance.slow = subset_samples(ps_genus_final, swim_performance %in% c('flow refuging', 'burrowing'))
