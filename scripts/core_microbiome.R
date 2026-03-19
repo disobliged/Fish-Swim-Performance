@@ -17,12 +17,12 @@ ps_genus = tax_glom(ps, 'Genus')
 # Filter to hindgut samples only 
 ps_genus_final = subset_samples(ps_genus, sample_type == "hindgut")
 
-# Subset your phyloseq object by swim performance group
+# Subset your phyloseq object by swim performance group (Fast, Moderate, Slow)
 performance.fast = subset_samples(ps_genus_final, swim_performance %in% c('accelerator', 'crusier sprinter', 'manoeuvrer'))
 performance.slow = subset_samples(ps_genus_final, swim_performance %in% c('flow refuging', 'burrowing'))
 performance.moderate = subset_samples(ps_genus_final, swim_performance == 'generalist')
 
-# Find core members
+# Find core members, Detection Level = 0.001, Prevalence Level = 0.10
 ASVs_fast = core_members(performance.fast, detection=0.001, prevalence = 0.1)
 ASVs_slow = core_members(performance.slow, detection=0.001, prevalence = 0.1)
 ASVs_moderate = core_members(performance.moderate, detection=0.001, prevalence = 0.1)
