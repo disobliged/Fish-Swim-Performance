@@ -61,19 +61,3 @@ tax_table(prune_taxa(ASVs_moderate, ps_genus))
 
 # Make a list
 swim_performance_list <- list("Fast" = ASVs_fast, "Slow" = ASVs_slow, "Moderate" = ASVs_moderate)
-
-# Load taxonomy name data 
-tax <- read_tsv("data_taxonomy.tsv")
-
-# Identify core microbiome taxa 
-core_taxa_slow <- tax[tax$`Feature ID` %in% ASVs_slow, ]
-core_taxa_fast <- tax[tax$`Feature ID` %in% ASVs_fast, ]
-core_taxa_moderate <- tax[tax$`Feature ID` %in% ASVs_moderate, ]
-
-# Identify unique core microbiome taxa
-u_slow     <- unique(core_taxa_slow$Taxon)
-u_fast     <- unique(core_taxa_fast$Taxon)
-u_moderate <- unique(core_taxa_moderate$Taxon)
-
-# Identify all unique slow core microbiome taxa 
-unique_to_slow <- setdiff(u_slow, union(u_fast, u_moderate))
