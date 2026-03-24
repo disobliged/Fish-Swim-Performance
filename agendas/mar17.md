@@ -22,8 +22,13 @@ Research Question:
 
 ## Alpha and Beta Diversity (Gina)
 
+### Notes
+- Gave Gina phyloseq object to do alpha and beta analyses 
+
 ## Core Microbiome (Sam)
 - Under plots
+
+### Notes
 - Fix figure for publication, add only 1 count, adjust limits 
 
 ## Manuscript Roles
