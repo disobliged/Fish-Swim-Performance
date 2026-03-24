@@ -2,7 +2,7 @@
 Research Question:
 > Does hindgut microbial diversity, core microbiota, differentially abundant taxa and energy metabolic pathways correlate with swimming performance across fish species?
 
-## Manuscript Prep 
+## Manuscript Prep, Minutes by VH
 
 - Roundtable: Look over analyses done thus far
 - Discuss about results
