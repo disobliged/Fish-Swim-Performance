@@ -2,7 +2,7 @@
 Research Question:
 > Do fish species and their associated microbial diversity in hindgut samples influence swimming performance and preferred depth in water?
 
-## Proposal Draft 
+## Proposal Draft, Minutes by SD
 
 - Fix Aims, Clarify any proposal questions
 
