@@ -18,10 +18,10 @@ This pipeline will be a complex analysis of the Picrust output we did on the cla
 Input and convert the ```phyloseq_taxonomy.rds``` sample data into a data frame and move the ```fastq``` sample IDs into a column. Then import the ```pred_metagenome_unstrat.tsv``` file.
 
 ```{r Import Data}
-meta = readRDS('phyloseq_taxonomy.rds') %>% .@sam_data %>% data.frame() %>% 
+meta = readRDS('../datasets/ps_filtered.rds') %>% .@sam_data %>% data.frame() %>% 
   rownames_to_column('sample_name')
 
-ko = read_delim('pred_metagenome_unstrat.tsv')
+ko = read_delim('../datasets/pred_metagenome_unstrat.tsv')
 ```
 
 
@@ -29,7 +29,8 @@ ko = read_delim('pred_metagenome_unstrat.tsv')
 
 ```{r DAA}
 # Rename the ko value so the first column is rownames
-ko = read_delim('pred_metagenome_unstrat.tsv', rownames = 1)
+#ko = read_delim('../datasets/pred_metagenome_unstrat.tsv', rownames = 1)
+## CHECK Unneccessary?
 
 # Filter to only compare hindgut microbiome
 hindgut = meta %>% filter(sample_type %in% c('hindgut'))
@@ -48,12 +49,12 @@ daa_results_df = pathway_daa(abundance = ko_filt,
 ```{r KO to KEGG}
 # Annotate pathway results using KO to KEGG conversion
 # This will take a while to run as it downloads KEGG data - save as an .rds file if you want to avoid re-running it
-# daa_annotated_results_df = pathway_annotation(pathway = "KO",
-#                                               daa_results_df = daa_results_df,
-#                                               ko_to_kegg = TRUE)
-# saveRDS(daa_annotated_results_df,'fish_daa_annotated_results_df.rds')
+daa_annotated_results_df = pathway_annotation(pathway = "KO",
+                                              daa_results_df = daa_results_df,
+                                              ko_to_kegg = TRUE)
+saveRDS(daa_annotated_results_df,'../datasets/fish_daa_annotated_results_df.rds')
 
-daa_annotated_results_df<-readRDS(daa_annotated_results_df,'fish_daa_annotated_results_df.rds')
+#daa_annotated_results_df<-readRDS(daa_annotated_results_df,'fish_daa_annotated_results_df.rds')
 ```
 
 
