@@ -1,3 +1,5 @@
 .DS_Store
 datasets/picrust_strat_output/intermediate/pathways/regrouped_infile.tsv
 .Rhistory
+.RData
+scripts/volcanoPlot.nb.html

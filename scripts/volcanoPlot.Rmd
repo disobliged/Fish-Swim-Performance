@@ -1,0 +1,29 @@
+---
+title: "Volcano Plot"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(RColorBrewer)
+library(ggrepel)
+```
+
+```{r}
+daaResults = readRDS('../datasets/fish_daa_results_df.rds')
+meta = readRDS('../datasets/ps_filtered.rds') %>% .@sam_data %>% data.frame() %>% 
+  rownames_to_column('sample_name')
+
+```
+
+```{r}
+hindgut = meta %>% filter(sample_type %in% c('hindgut'))
+samp_name = select(hindgut, sample_name)
+plot = cross_join(samp_name, daaResults) ## CHECK IS THIS RIGHT
+```
+
+```{r}
+ggplot(data = plot, aes(x=log2_fold_change, y = -log10(p_values)))+
+  geom_point()
+```
+
