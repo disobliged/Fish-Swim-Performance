@@ -34,10 +34,10 @@ Research Question:
 - Introduction: Vanessa, Sam
 - Methods & Materials: Izaak, Sam, Everyone
 - Results/Figures/Captions: Everyone
-- Discussion: Gina
+- **Discussion:** Gina
 - Limitations: Gina, Vanessa
 - Conclusion: Everyone, but one person writes to be cohesive
-- Future Directions:
+- Future Directions: Sam
 - Contributions: Sam
 - Acknowledgements: Sam
 
@@ -51,9 +51,9 @@ Research Question:
 |Person|Task       |Done?|
 |:---: |:---:      |:---:|
 |IY    |Work on PICRUSt2   |[ ]  |
-|SD    |Work on PICRUSt2 w/ stratification     |[ ]  |
-|AL    |Differential Abundance Figure  |[ ]  |
-|VH    |Taxonomy Bar Plot Figure, Heatmap |[ ]  |
+|IY/AL    |Volcano Plot   |[ ]  |
+|SD    |Work on PICRUSt2 w/ stratification figure    |[ ]  |
+|VH    |Taxonomy Bar Plot Figure |[ ]  |
 |VX    |Analyze alpha and beta analysis |[ ]  |
 |Everyone    |Draft Presentation Slides|[ ]  |
 |Everyone    |Sign up for more Manuscript Roles|[ ]  |
