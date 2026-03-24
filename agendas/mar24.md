@@ -51,8 +51,8 @@ Research Question:
 |Person|Task       |Done?|
 |:---: |:---:      |:---:|
 |IY    |Work on PICRUSt2   |[ ]  |
+|IY    |Volcano Plot   |[ ]  |
 |SD    |Work on PICRUSt2 w/ stratification     |[ ]  |
-|AL    |Differential Abundance Figure  |[ ]  |
 |VH    |Taxonomy Bar Plot Figure, Heatmap |[ ]  |
 |VX    |Analyze alpha and beta analysis |[ ]  |
 |Everyone    |Draft Presentation Slides|[ ]  |
