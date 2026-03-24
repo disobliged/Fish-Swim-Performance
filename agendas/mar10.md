@@ -26,5 +26,8 @@ Research Question:
 - PICRUSt2: Izaak 
 - PICRUSt2 w/ stratification: Sam
 
+### Notes 
+- Feedback was added on the Google Docs
+
 
 
