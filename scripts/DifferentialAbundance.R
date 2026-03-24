@@ -8,7 +8,7 @@ ps = readRDS('ps_filtered.rds')
 
 library(ANCOMBC)
 
-# Tax_glom 
+# Tax_glom, convert up to the Genus level
 ps_glom = tax_glom(ps, 'Genus')
 
 # Filter to hindgut samples only 
