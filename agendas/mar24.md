@@ -34,7 +34,7 @@ Research Question:
 - Introduction: Vanessa, Sam
 - Methods & Materials: Izaak, Sam, Everyone
 - Results/Figures/Captions: Everyone
-- Discussion: Gina
+- **Discussion:** Gina
 - Limitations: Gina, Vanessa
 - Conclusion: Everyone, but one person writes to be cohesive
 - Future Directions: Sam
