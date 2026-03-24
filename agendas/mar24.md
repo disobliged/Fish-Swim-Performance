@@ -10,6 +10,7 @@ Research Question:
 
 ### Notes
 - Beginning to upload QIIME2 outputs, will start uploading code / organizing Github
+- Let's add folders for each of the aims to keep it organized 
 
 ## Analyses
 
