@@ -42,6 +42,8 @@ daa_results_df = pathway_daa(abundance = ko_filt,
                              group = "swim_performance", 
                              daa_method = "LinDA", 
                              select = NULL, reference = NULL)
+
+saveRDS(daa_results_df, '../datasets/fish_daa_results_df.rds')
 ```
 
 ## Convert KO to KEGG
@@ -51,18 +53,31 @@ daa_results_df = pathway_daa(abundance = ko_filt,
 # This will take a while to run as it downloads KEGG data - save as an .rds file if you want to avoid re-running it
 daa_annotated_results_df = pathway_annotation(pathway = "KO",
                                               daa_results_df = daa_results_df,
-                                              ko_to_kegg = TRUE)
+                                              ko_to_kegg = FALSE) ###*** NOTE LOCAL ANNOTATION USED, CANT CONNECT TO KEGG; CHANGE TO TRUE ONCE FIXED
 saveRDS(daa_annotated_results_df,'../datasets/fish_daa_annotated_results_df.rds')
 
 #daa_annotated_results_df<-readRDS(daa_annotated_results_df,'fish_daa_annotated_results_df.rds')
 ```
 
 
-## KEGG Error Barplot
+## KEGG Error Barplot - Has issues due to KEGG
 ```{r KEGG Plot}
 source('ggpicrust2_errorbar_function_fixed.R')
 
-daa_annotated_results_df %>% filter(p_adjust< 5e-11, abs(log2FoldChange) > 5) %>% nrow()
+daa_annotated_results_df %>% filter(p_adjust< 5e-11, abs(log2_fold_change) > 5) %>% nrow()
+
+## Messy Error Plot
+
+p = pathway_errorbar(abundance = ko_filt, 
+                     daa_results_df = daa_annotated_results_df, 
+                     Group = hindgut$swim_performance, 
+                     p_values_threshold = 5e-11, 
+                     order = "pathway_class", 
+                     ko_to_kegg = T, 
+                     p_value_bar = TRUE, 
+                     x_lab = "pathway_name")
+
+#Fixed Plot
 
 peb = pathway_errorbar_fixed(abundance = ko_filt, 
                      daa_results_df = daa_annotated_results_df, 
@@ -71,7 +86,7 @@ peb = pathway_errorbar_fixed(abundance = ko_filt,
                      fc_cutoff = 5, order_by_log = F,
                      p_values_threshold = 5e-11, 
                      order = "pathway_class", 
-                     ko_to_kegg = TRUE, 
+                     ko_to_kegg = FALSE, ### CHANGE ONCE KEGG WORKS
                      p_value_bar = TRUE, 
                      x_lab = "pathway_name")
 peb
