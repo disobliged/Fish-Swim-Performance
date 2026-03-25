@@ -24,6 +24,8 @@ Research Question:
 - PICRUSt2: Izaak 
 - PICRUSt2 w/ stratification: Sam
 
+
+
 ## Presentation 
 - Presentations are in t-2 weeks! Let's draft our presentation slides + a brief overview of what we will say 
 - Which analyses should we include in the presentation (i.e. which seem relevant/easier to explain) - let's narrow it down to 2-3 important slides + easy to explain methodology 
