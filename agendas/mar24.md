@@ -25,11 +25,26 @@ Research Question:
 - PICRUSt2 w/ stratification: Sam
 
 
-
 ## Presentation 
 - Presentations are in t-2 weeks! Let's draft our presentation slides + a brief overview of what we will say 
 - Which analyses should we include in the presentation (i.e. which seem relevant/easier to explain) - let's narrow it down to 2-3 important slides + easy to explain methodology 
-- **Action item**: finish a draft of the figures (publication-ready) needed and make the presentation slides, assign roles for slides 
+- **Action item**: finish a draft of the figures (publication-ready) needed and make the presentation slides, assign roles for slides
+
+  
+## Meeting Notes
+- Finish presentation slides for next week (mock presentation)
+- Fix taxonomy bar plot -> Filter in R and look at differential abundance
+- Pi crust analysis is still in progress
+- Alpha diversity plot: Significance between Burrowing and Flow refuging groups (slow group), no significance between slow and fast groups
+- Beta diversity results are looking more promising, significance between 
+- Core microbiome plot: slow group was more abundant -> The microbes linked to the slow group were found in higher numbers compared to other groups
+- Explore energy producting pathways; there may be several ways to explain findings -> for example fermentation pathways may be more prevalent among slow fish, whereas fish requiring more oxygen may be associated with faster swimming fish
+- For the presentation slides, use unique colours! Not the default ones built into R (ideally a palette that's colour blind friendly)
+- Historically, for presentations, students spend 5 minutes on results, and 5 minutes to explain the intro/background and conclusion
+- Distribute roles for oral presentation
+- Include alpha/diveristy analysis, core microbiome and picrust results in the presentation 
+- When discussing the results to the class, don't have to be too granular, can generalize and covey the main findings/overall trends that we found.
+
 
 ## Manuscript Roles
 
