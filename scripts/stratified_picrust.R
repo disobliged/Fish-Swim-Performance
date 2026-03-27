@@ -6,10 +6,25 @@ library(ggplot2)
 library(phyloseq)
 
 # Load MetaCyc stratified pathway contribution data
-strat_mc_data <- data.table::fread("path_abun_contrib.tsv")
+strat_mc_data_1 <- data.table::fread("path_abun_contrib_1.tsv")
 
-# View MetaCyc function names
-unique(strat_mc_data$`function`)
+norm_calc <- strat_mc_data_1 %>%
+  group_by(sample, `function`) %>%
+  mutate(norm_taxon_function_contrib = taxon_function_abun / sum(taxon_function_abun)) %>%
+ungroup()
+
+test = norm_calc %>%
+  filter(sample == "13414.1.gill.R1.fastq.gz", `function` == "1CMET2-PWY")
+
+average_contribution <- norm_calc %>%
+  group_by(`function`, taxon) %>%
+  mutate(avg_contrib = mean(norm_taxon_function_contrib)) %>%
+  ungroup() %>%
+  select(`function`, taxon, avg_contrib) %>%
+  unique()
+
+sig_contrib <- average_contribution %>%
+  filter(avg_contrib >= 0.33)
 
 # Define Energy Pathways of interest
 energy_pathways <- c(
@@ -26,6 +41,16 @@ energy_pathways <- c(
   "NONOXIPENT-PWY",
   "GLYOXYLATE-BYPASS"
 )
+
+mc_pathways <- sig_contrib %>%
+  filter(`function` %in% energy_pathways) %>%
+  unique()
+
+
+         
+# View MetaCyc function names
+unique(strat_mc_data$`function`)
+
 
 # Filter for the energy pathways
 filtered_pathways <- strat_mc_data %>%
@@ -46,7 +71,7 @@ normalized_pathways <- filtered_pathways %>%
 avg_contribution <- normalized_pathways %>%
   group_by(`function`, taxon) %>%
   summarize(
-    mean_prop = mean(prop_contrib, na.rm = TRUE),
+    mean_prop = mean(norm_taxon_function_contrib, na.rm = TRUE),
     .groups = "drop"
   )
 
@@ -75,3 +100,4 @@ contributors_only <- taxa_pathway_counts_2 %>%
 # See how many unique taxa are left 
 unique_taxa_count <- length(unique(contributors_only$Taxon))
 unique_taxa_count
+
