@@ -18,6 +18,10 @@ The alpha diversity for this dataset will be calculated using the Shannon Index 
 # Set the seed
 set.seed(1)
 
+# Load ps
+
+ps = readRDS('../datasets/ps_filtered.rds')
+
 # View histogram
 hist(sample_sums(ps))
 
@@ -44,12 +48,26 @@ psRare = ps %>%
 
 table(sample_sums(psRare))
 ```
+
+```{r}
+# Sort data into Fast, Moderate, and Slow
+
+# Filter to hindgut samples only 
+hindgut = subset_samples(ps, sample_type == "hindgut")
+
+# Subset the phyloseq object by swim performance group (Fast, Moderate, Slow)
+# performance.fast = subset_samples(hindgut, swim_performance %in% c('accelerator', 'crusier sprinter', 'manoeuvrer'))
+# performance.slow = subset_samples(hindgut, swim_performance %in% c('flow refuging', 'burrowing'))
+# performance.moderate = subset_samples(hindgut, swim_performance == 'generalist')
+
+```
 With the rarefied data, we can now calculate alpha diversity (Shannon) and Wilcoxon's test.
 
 ```{r Alpha Diversity}
 # Calculate Shannon
+
 fishShannon = plot_richness(
-  psRare,
+  hindgut,
   x = 'swim_performance',
   measures = 'Shannon',
   color = 'swim_performance'
@@ -58,6 +76,18 @@ fishShannon = plot_richness(
 # Make it publication-ready
 pData = fishShannon$data
 str(pData)
+
+### HELP SETTTING UP THE FILTERING
+# ?ifelse
+# grouped = pData %>% 
+#   ifelse(swim_performance == 'accelerator'|'crusier sprinter'|'manoeuvrer',
+#          swim_group = 'Fast',
+#          ifelse(swim_performance == 'generalist'),
+#          swim_group = 'Moderate',
+#          swim_group = 'Slow'
+#   ),
+#   .after = swim_performance
+# )
 
 fishFormatted = pData %>% 
   ggplot(aes(swim_performance,value,fill = swim_performance))+
