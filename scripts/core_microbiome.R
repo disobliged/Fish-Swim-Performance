@@ -1,3 +1,5 @@
+### This R script will perform a core microbiome analysis of fish hindgut samples by assigned swim performance group (Fast, Moderate, Slow)
+
 library(tidyverse)
 library(phyloseq)
 library(microbiome)
