@@ -79,18 +79,25 @@ str(pData)
 
 ### HELP SETTTING UP THE FILTERING
 # ?ifelse
-# grouped = pData %>% 
-#   ifelse(swim_performance == 'accelerator'|'crusier sprinter'|'manoeuvrer',
-#          swim_group = 'Fast',
-#          ifelse(swim_performance == 'generalist'),
-#          swim_group = 'Moderate',
-#          swim_group = 'Slow'
-#   ),
-#   .after = swim_performance
-# )
 
-fishFormatted = pData %>% 
-  ggplot(aes(swim_performance,value,fill = swim_performance))+
+fast = c('accelerator','crusier sprinter','manoeuvrer')
+#moderate = c('generalist')
+#slow = c('flow refuging', 'burrowing')
+
+grouped = pData %>%
+  mutate(swim_group = ifelse(swim_performance %in% fast,
+                      'Fast',
+                      ifelse(swim_performance == 'generalist',
+                      'Moderate',
+                      'Slow'
+                      )
+  ),
+  .after = swim_performance
+  )
+
+
+fishFormatted = grouped %>% 
+  ggplot(aes(swim_group,value,fill = swim_group))+
   geom_boxplot(outlier.shape = NA)+
   geom_jitter(height = 0,width = 0.2)+
   theme_classic(base_size = 18)+
@@ -101,31 +108,38 @@ fishFormatted = pData %>%
   labs(fill='Swim Performance')
 
 # Now add the Wilcoxon element
-comparisonsList = list(
-  # Accelerator
-  c('accelerator','burrowing'),
-  c('accelerator','crusier sprinter'),
-  c('accelerator','flow refuging'),
-  c('accelerator','generalist'),
-  c('accelerator','manoeuvrer'),
-  # Burrowing
-  c('burrowing','crusier sprinter'),
-  c('burrowing','flow refuging'),
-  c('burrowing','generalist'),
-  c('burrowing','manoeuvrer'),
-  # Crusier Sprinter
-  c('crusier sprinter','flow refuging'),
-  c('crusier sprinter','generalist'),
-  c('crusier sprinter','manoeuvrer'),
-  # Flow Refuging
-  c('flow refuging','generalist'),
-  c('flow refuging','manoeuvrer'),
-  # Generalist
-  c('generalist','manoeuvrer')
+# comparisonsList = list(
+#   # Accelerator
+#   c('accelerator','burrowing'),
+#   c('accelerator','crusier sprinter'),
+#   c('accelerator','flow refuging'),
+#   c('accelerator','generalist'),
+#   c('accelerator','manoeuvrer'),
+#   # Burrowing
+#   c('burrowing','crusier sprinter'),
+#   c('burrowing','flow refuging'),
+#   c('burrowing','generalist'),
+#   c('burrowing','manoeuvrer'),
+#   # Crusier Sprinter
+#   c('crusier sprinter','flow refuging'),
+#   c('crusier sprinter','generalist'),
+#   c('crusier sprinter','manoeuvrer'),
+#   # Flow Refuging
+#   c('flow refuging','generalist'),
+#   c('flow refuging','manoeuvrer'),
+#   # Generalist
+#   c('generalist','manoeuvrer')
+# )
+
+comparisonsList=list(
+  c('Fast','Moderate'),
+  c('Fast', 'Slow'),
+  c('Moderate', 'Slow')
 )
 
 fishCompare = fishFormatted +
   stat_compare_means(comparisons = comparisonsList, method = 'wilcox.test',size = 6)
+fishCompare
 ```
 
 The code above gives us a raw alpha diversity plot; ```fishCompare``` gives us a plot with p-values comparing all swim performances. We will simplify the plot by removing P-values that are above significance (P>0.05) to make the figure more publication-friendly.
@@ -133,45 +147,49 @@ The code above gives us a raw alpha diversity plot; ```fishCompare``` gives us a
 ```{r Making It Clean}
 # Add on to fishFormatted from fishCompare
 
+# cleanAlphaFish<-fishFormatted+
+#   ylim(0,6.75)+
+#   geom_signif(
+#     comparison = list(
+#       c('burrowing','flow refuging')),
+#     y_position = c(
+#       5.5
+#     ),
+#     annotations = c(
+#       '*'
+#     ),
+#     textsize = 16
+#   )+
+#   scale_x_discrete(labels=
+#     c(
+#       'Accelerator',
+#       'Burrowing',
+#       'Crusier Sprinter',
+#       'Flow Refuging',
+#       'Generalist',
+#       'Manoeuvrer'
+#     )
+#   )+
+#   scale_fill_discrete(
+#     labels=
+#     c(
+#       'Accelerator',
+#       'Burrowing',
+#       'Crusier Sprinter',
+#       'Flow Refuging',
+#       'Generalist',
+#       'Manoeuvrer'
+#     )
+#   )
+
 cleanAlphaFish<-fishFormatted+
-  ylim(0,6.75)+
-  geom_signif(
-    comparison = list(
-      c('burrowing','flow refuging')),
-    y_position = c(
-      5.5
-    ),
-    annotations = c(
-      '*'
-    ),
-    textsize = 16
-  )+
-  scale_x_discrete(labels=
-    c(
-      'Accelerator',
-      'Burrowing',
-      'Crusier Sprinter',
-      'Flow Refuging',
-      'Generalist',
-      'Manoeuvrer'
-    )
-  )+
-  scale_fill_discrete(
-    labels=
-    c(
-      'Accelerator',
-      'Burrowing',
-      'Crusier Sprinter',
-      'Flow Refuging',
-      'Generalist',
-      'Manoeuvrer'
-    )
-  )
+  scale_fill_manual(values=c('#fcba65','#E07A9A','#8E7CA6'))
+cleanAlphaFish
 ```
 Now that we have a clean figure, we can export it as a ```.jpg```.
 
 ```{r Export Figure}
-ggsave('alphaCleanFish.jpg',
+ggsave('../plots/alphaCleanFishGrouped.jpg',
        plot = cleanAlphaFish,
        height=8.5, width = 14)
 ```
