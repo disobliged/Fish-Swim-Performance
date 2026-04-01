@@ -152,11 +152,11 @@ strat_prop_grouped <- strat_prop %>%
 plot_avg <- strat_prop_grouped %>%
   mutate(`function` = str_to_title(`function`)) %>%
   ggplot(aes(`function`, prop_tax_reads_per_function, fill = Family)) +
-  geom_col(position = "stack") +
-  facet_wrap(~`function`, ncol = 4, scales = "free") +
-  theme_classic(base_size = 18) +
+  labs(y = "Proportion of Family taxa reads per function") +
+  geom_col(position = "stack", color = NA) +
+  theme_classic(base_size = 22) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1),
-        legend.position = "none") +
+       legend.position = "none")+
   xlab(NULL)
 
 plot_avg
@@ -165,16 +165,17 @@ plot_avg
 plot_avg <- strat_prop_grouped %>%
   mutate(`function` = str_to_title(`function`)) %>%
   ggplot(aes(`function`, prop_tax_reads_per_function, fill = Family)) +
-  labs(y = "Proportion of taxa reads per function") +
-  geom_col(position = "stack") +
-  facet_wrap(~`function`, ncol = 4, scales = "free") +
-  theme_classic(base_size = 18) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+  labs(y = "Proportion of Family taxa reads per function") +
+  geom_col(position = "stack", color = NA) +
+  theme_classic(base_size = 22) +
+  theme(strip.text = element_blank(),
+        axis.text.x = element_text(angle = 45, hjust = 1),
         legend.title = element_blank(),
-        legend.key.size = unit(0.6, "cm"),
-        legend.text = element_text(size = 10)) +
+        legend.key.size = unit(1, "cm"),
+        legend.text = element_text(size = 16)) +
   xlab(NULL)
 
 plot_avg
+ggsave("plot_avg.jpg", plot_avg)
 
   
