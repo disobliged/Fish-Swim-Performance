@@ -38,14 +38,15 @@ ko = column_to_rownames(read_delim('../datasets/picrust_output/KO_metagenome_out
 ### HELP ###
 hindgut = meta %>% filter(sample_type %in% c('hindgut'))
 ko_filt = ko %>% select(all_of(hindgut$sample_name))
-  mutate(feature = sapply(.$feature, function(x) str_split(x,':') %>% 
-                            .[[1]] %>% 
-                            .[2]
-    )
-    )
-sapply(ko_filt$feature, function(x) str_remove(x,'ko:') %>% unlist())
+## Works without these on windows?
+  # mutate(feature = sapply(.$feature, function(x) str_split(x,':') %>% 
+  #                           .[[1]] %>% 
+  #                           .[2]
+  #   )
+  #   )
+# sapply(ko_filt$feature, function(x) str_remove(x,'ko:') %>% unlist())
 # Perform pathway differential abundance analysis (DAA) using LinDA method
-daa_results_df = pathway_daa(abundance = ko_filt,
+daa_results_df = pathway_daa(abundance = ko,
                              metadata = hindgut, 
                              group = "swim_performance", 
                              daa_method = "LinDA", 
@@ -61,7 +62,7 @@ saveRDS(daa_results_df, '../datasets/fish_daa_results_df.rds')
 # This will take a while to run as it downloads KEGG data - save as an .rds file if you want to avoid re-running it
 daa_annotated_results_df = pathway_annotation(pathway = "KO",
                                               daa_results_df = daa_results_df,
-                                              ko_to_kegg = FALSE)
+                                              ko_to_kegg = TRUE)
 
 saveRDS(daa_annotated_results_df,'../datasets/fish_daa_annotated_results_df.rds')
 
