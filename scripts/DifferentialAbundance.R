@@ -4,7 +4,7 @@ library(phyloseq)
 library(readxl)
 
 # Load object
-ps = readRDS('ps_filtered.rds')
+ps = readRDS('../datasets/ps_filtered.rds')
 
 library(ANCOMBC)
 
