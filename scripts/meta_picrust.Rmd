@@ -1,6 +1,6 @@
 ---
 title: "Picrust"
-author: "IY"
+author: "SD"
 date: "2026-03-23"
 output: html_document
 ---
@@ -21,7 +21,7 @@ Input and convert the ```phyloseq_taxonomy.rds``` sample data into a data frame 
 meta = readRDS('../datasets/ps_filtered.rds') %>% .@sam_data %>% data.frame() %>% 
   rownames_to_column('sample_name')
 
-metacyc = read_delim('path_abun_unstrat.tsv')
+metacyc = read_delim('../datasets/picrust_output/pathways_out/path_abun_unstrat.tsv')
 ```
 
 
@@ -186,7 +186,7 @@ pheatmap(stats,
 
 hindgut1 <- hindgut %>%
   mutate(
-    swim_performance_group = case_when(
+    Swim_Performance = case_when(
       swim_performance %in% c("accelerator", "crusier sprinter") ~ "Fast",
       swim_performance %in% c("burrowing", "flow refuging", "manoeuvrer") ~ "Slow",
       swim_performance == "generalist" ~ "Moderate",
@@ -195,9 +195,15 @@ hindgut1 <- hindgut %>%
   )
 
 pca = pathway_pca(abundance = metacyc_filt,
-            metadata = hindgut1, 
-            group = "swim_performance_group")
+            metadata = hindgut1,
+            group = "Swim_Performance",
+            colors = c('#8E7CA6','#E07A9A','#fcba65')
+            )
+pca
 
+ggsave('../plots/pca.jpg',
+       plot = pca,
+       height=8.5, width = 14)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

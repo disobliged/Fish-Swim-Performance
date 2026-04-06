@@ -6,3 +6,4 @@ scripts/volcanoPlot.nb.html
 datasets/picrust_output/KO_metagenome_out/pred_metagenome_unstrat.tsv/pred_metagenome_unstrat.tsv
 datasets/picrust_output/EC_metagenome_out/pred_metagenome_unstrat.tsv/pred_metagenome_unstrat.tsv
 scripts/.RDataTmp
+datasets/picrust_output/pathways_out/path_abun_unstrat.tsv
