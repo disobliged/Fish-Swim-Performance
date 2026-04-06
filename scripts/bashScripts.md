@@ -1,8 +1,6 @@
 # Consolidated Bash Scripts
-Author: IY
-
-Created: Apr 5, 2026
-
+Author: IY <br>
+Created: Apr 5, 2026 <br>
 Last Modified: Apr 5, 2026
 
 This document contains the Qiime2 and PICRUSt2 commands we have used to build our project. Common Bash functions will not be included here. Line breaks are included in our code for clarity, but are not neccessary for the function to run.
