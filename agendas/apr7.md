@@ -32,7 +32,7 @@ Research Question:
 - Results/Figures/Captions: Everyone
 - Discussion: Gina
 - Limitations: Gina, Vanessa
-- Conclusion: Everyone, but one person writes to be cohesive (Izaak, Annabel and or Sam)
+- Conclusion: Everyone, but one person writes to be cohesive (Annabel or Sam)
 - Future Directions: Sam
 - Contributions: Sam
 - Acknowledgements: Sam
