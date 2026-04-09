@@ -1,6 +1,6 @@
 # This differential abundance analysis is performed using Maaslin2 and was used to see if there are any differential abundant taxa in Slow and Fast groups. 
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Differential abundance with Maaslin2
 library(tidyverse)
