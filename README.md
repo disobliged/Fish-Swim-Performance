@@ -6,5 +6,5 @@
 ## Research Question
 > Does hindgut microbial diversity, core microbiota, differentially abundant taxa and predicted energy metabolic pathways correlate with swimming performance across fish species?
 ## Open Source
-The project's dataset is open access and can be found [here](https://doi.org/10.1101/2022.03.07.483203).
+The project's dataset is open access and can be found [here](https://doi.org/10.1038/s41467-022-34557-2).
 In an effort to keep research accessible, the project's code is licensed under the GPL v3 license. This is done so the code will always be free and accessible for future reference.
