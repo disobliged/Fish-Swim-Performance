@@ -27,6 +27,12 @@ Research Question:
 
 ### Notes 
 - Feedback was added on the Google Docs
-
+- Emphasize importance of research for fish, why are we doing this research
+- Be more detailed with the proposed approach, are we denoising, filtering, etc
+- Examine UJEMI and other literature, what is already known, what is missing
+- Cite all packages used, use Zotero to keep track
+- Be more specific with research question and rationale
+- Be more detailed on Aims
+- 
 
 
