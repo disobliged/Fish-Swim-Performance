@@ -1,6 +1,6 @@
 # Team 7 Meeting #1, January 13th, 2025
 
-##  Project Ideas - Minutes by Annabel Lu
+##  Project Ideas and Notes - Minutes by Annabel Lu
 ### IBD Ryan
 - Do sex differences in the gut microbiome modify responses to treatment to various drugs for Crohn’s disease?
 - *Categorize drugs by function/use and check that drug data has enough samples per group 
