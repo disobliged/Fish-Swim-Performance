@@ -45,17 +45,17 @@ energy_pathways <- c(
 # * Convert to relative abundance to control for sequencing depth
 
 # Load Fish Metadata 
-metadata <- read_excel("fish_metadata_2.xlsx")
+metadata <- read_excel("datasets/fish_metadata_2.xlsx")
 
 # Load stratified pathway contribution data (MetaCyc used)
-strat_mc_data_1 <- data.table::fread("path_abun_contrib.tsv")
+strat_mc_data_1 <- data.table::fread("datasets/path_abun_contrib.tsv")
 
 # Rename column name from #SampleID to sample 
 metadata <- metadata %>%
   rename(sample = `#SampleID`)
 
 # Left join sample names from metadata to stratified MetaCyc data
-strat_mc_data_1 <- data.table::fread("path_abun_contrib.tsv") %>%
+strat_mc_data_1 <- data.table::fread("datasets/path_abun_contrib.tsv") %>%
   left_join(metadata, by = "sample")
 
 # Filter for hindgut samples
@@ -105,7 +105,7 @@ strat_filt_slow = strat_rel_slow %>%
 
 # Aggregate reads to the Family level
 # Load tax data, keep just the Family info
-tax <- read_tsv("data_taxonomy.tsv") %>%  # Load Taxonomy Data Names
+tax <- read_tsv("datasets/data_taxonomy.tsv") %>%  # Load Taxonomy Data Names
   separate(`Taxon`, into = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus"), sep = ";") %>%
   select(taxon = `Feature ID`, Family) %>% 
   mutate(Family = ifelse(is.na(Family),taxon, Family)) # If no Family name, keep the feature ID for now
