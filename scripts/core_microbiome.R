@@ -8,7 +8,7 @@ library(microbiome)
 library(ggVennDiagram)
 
 # Load object/data
-ps = readRDS('../datasets/ps_filtered.rds')
+ps = readRDS('datasets/ps_filtered.rds')
 
 
 # Core Microbiome Analysis
