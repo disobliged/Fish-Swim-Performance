@@ -15,7 +15,7 @@ daaResults = readRDS('../datasets/fish_daa_results_df.rds')
 ```
 
 ```{r Volcano Plot}
-ggplot(data = daaResults, aes(x=log2FoldChange, y = -log10(p_adjust)))+
+volcano = ggplot(data = daaResults, aes(x=log2FoldChange, y = -log10(p_adjust)))+
   geom_point(colour = '#8E7CA6')+
   aes(alpha = 0.25)+
   geom_hline(yintercept = -log10(0.05), linetype = 'dashed', color = '#E07A9A')+
@@ -23,3 +23,10 @@ ggplot(data = daaResults, aes(x=log2FoldChange, y = -log10(p_adjust)))+
   theme(legend.position='none')
 ```
 Pink line indicates significance (P = 0.05). No point has surpassed the significance threshold.
+
+```{r Export}
+ggsave('../plots/volcanoPlot.jpg',
+       plot = volcano,
+       height=8.5, width = 14)
+```
+
