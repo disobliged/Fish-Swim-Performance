@@ -5,6 +5,10 @@ date: "2026-03-23"
 output: html_document
 ---
 
+# ggpicrust2 Error Bar Script
+
+This script was adapted from "R Scripts/Module 15 - ggpicrust2.Rmd," originally written by Avril Metcalfe-Roach
+
 ```{r library, include=FALSE}
 library(tidyverse)
 library(phyloseq)
@@ -24,12 +28,32 @@ meta = readRDS('../datasets/ps_filtered.rds') %>% .@sam_data %>% data.frame() %>
 ko = read_delim('../datasets/picrust_output/KO_metagenome_out/pred_metagenome_unstrat.tsv')
 ```
 
+## Group
+
+```{r Group}
+fast = c('accelerator','crusier sprinter','manoeuvrer')
+meta = meta %>%
+  mutate(swim_group = ifelse(swim_performance %in% fast,
+                      'Fast',
+                      ifelse(swim_performance == 'generalist',
+                      'Moderate',
+                      'Slow'
+                      )
+  ),
+  .after = swim_performance
+  )
+meta_fast_slow = meta %>% 
+  filter(
+    swim_group == c('Fast','Slow')
+  )
+```
+
 
 ## Run the Pipeline
 
 ```{r DAA}
 # Filter to only compare hindgut microbiome
-hindgut = meta %>% filter(sample_type %in% c('hindgut'))
+hindgut = meta_fast_slow %>% filter(sample_type %in% c('hindgut'))
 ko_filt = select(ko,`function`) %>% 
   mutate(`function` = sapply(.$`function`, function(x) str_split(x,'ko:') %>%
                             .[[1]] %>%
@@ -42,12 +66,16 @@ ko_joined = add_column(ko, ko_filt$`function`)
 ko_named = column_to_rownames(ko_joined, var = 'ko_filt$`function`')
 ko_selected = select(ko_named, -`function`)
 
+ko_daa = ko_selected [
+  ,hindgut$sample_name
+]
+
 # sapply(ko$`function, function(x) str_remove(x,'ko:') %>% unlist())
 
 # Perform pathway differential abundance analysis (DAA) using LinDA method
-daa_results_df = pathway_daa(abundance = ko_selected,
+daa_results_df = pathway_daa(abundance = ko_daa,
                              metadata = hindgut, 
-                             group = "swim_performance", 
+                             group = "swim_group", 
                              daa_method = "LinDA", 
                              select = NULL, reference = NULL)
 
@@ -61,80 +89,15 @@ daa_results_df = readRDS('../datasets/fish_daa_results_df.rds')
 ```{r KO to KEGG}
 # Annotate pathway results using KO to KEGG conversion
 # This will take a while to run as it downloads KEGG data - save as an .rds file if you want to avoid re-running it
-# daa_annotated_results_df = pathway_annotation(pathway = "KO",
-#                                               daa_results_df = daa_results_df,
-#                                               ko_to_kegg = TRUE)
-# 
-# saveRDS(daa_annotated_results_df,'../datasets/fish_daa_annotated_results_df.rds')
+daa_annotated_results_df = pathway_annotation(pathway = "KO",
+                                              daa_results_df = daa_results_df,
+                                              ko_to_kegg = TRUE)
+
+saveRDS(daa_annotated_results_df,'../datasets/fish_daa_annotated_results_df.rds')
 
 daa_annotated_results_df<-readRDS('../datasets/fish_daa_annotated_results_df.rds')
 ```
 
+## This script ends here
 
-## KEGG Error Barplot - Has issues due to KEGG
-```{r KEGG Plot}
-source('ggpicrust2_errorbar_function_fixed.R')
-
-daa_annotated_results_df %>% filter(p_adjust< 5e-11, abs(log2_fold_change) > 5) %>% nrow()
-
-peb = pathway_errorbar_fixed(abundance = ko_selected, 
-                     daa_results_df = daa_annotated_results_df, 
-                     Group = hindgut$swim_performance, 
-                     wrap_label = T, wraplength=60,
-                     fc_cutoff = 5, order_by_log = F,
-                     p_values_threshold = 5e-11, 
-                     order = "pathway_class", 
-                     ko_to_kegg = TRUE,
-                     p_value_bar = TRUE, 
-                     x_lab = "pathway_name")
-peb
-ggsave("KEGG Error Bar.png",
-       plot = peb, width = 18, height = 10)
-```
-
-## View Identical Features
-
-```{r Identical Features}
-sig_features = daa_annotated_results_df %>% 
-  filter(p_adjust < 5e-11, abs(log2FoldChange) > 5) %>% 
-  pull('feature') %>% unique()
-
-ko_relab = read.delim('pred_metagenome_unstrat.tsv',row.names = 1) %>% 
-  apply(2,function(x) x/sum(x)) %>% as.data.frame()
-colSums(ko_relab) # Should be all 1
-
-stats = ko_relab %>% t() %>%  # switch rows and columns
-  as.data.frame() %>% # Lets us use select()
-  select(all_of(sig_features)) %>% 
-  cor(method = 'pearson') #Pearson tests between every feature pair
-
-# Define the color palette
-color_palette <- colorRampPalette(c("blue", "white", "red"))(40)
-
-# Define breaks for the color scale
-breaks <- seq(-1, 1, length.out = 41)  # 40 colors + 1 for the endpoint
-
-# Create the clustered heatmap with centered color at zero
-library('pheatmap')
-pheatmap(stats, 
-         clustering_distance_rows = "euclidean",  
-         clustering_distance_cols = "euclidean", 
-         clustering_method = "complete",          
-         color = color_palette, 
-         breaks = breaks,
-         main = '',
-         fontsize_row = 10, 
-         fontsize_col = 10,
-         filename = "KEGG Heatmap.png",
-         height= 9, width = 9)
-```
-
-## View Sample Similarity
-
-```{r PCA}
-pathway_pca(abundance = ko_filt,
-            metadata = hindgut, 
-            group = "swim_performance")
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+There was no significant pathways in the annotated results. In light of this, we created a volcano plot to highlight the non-significance.

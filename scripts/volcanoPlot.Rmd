@@ -1,25 +1,25 @@
 ---
+author: "IY"
 title: "Volcano Plot"
 output: html_notebook
 ---
 
-```{r}
+```{r Libraries}
 library(tidyverse)
 library(RColorBrewer)
 library(ggrepel)
 ```
 
-```{r}
+```{r DAA Results}
 daaResults = readRDS('../datasets/fish_daa_results_df.rds')
-meta = readRDS('../datasets/ps_filtered.rds') %>% .@sam_data %>% data.frame() %>% 
-  rownames_to_column('sample_name')
-
 ```
 
-```{r}
-hindgut = meta %>% filter(sample_type %in% c('hindgut'))
-ggplot(data = plot, aes(x=log2_fold_change, y = -log10(p_values)))+
-  geom_point()+
-  aes(alpha = 0.25)
+```{r Volcano Plot}
+ggplot(data = daaResults, aes(x=log2FoldChange, y = -log10(p_adjust)))+
+  geom_point(colour = '#8E7CA6')+
+  aes(alpha = 0.25)+
+  geom_hline(yintercept = -log10(0.05), linetype = 'dashed', color = '#E07A9A')+
+  ylim(NA,1.5)+
+  theme(legend.position='none')
 ```
-
+Pink line indicates significance (P = 0.05). No point has surpassed the significance threshold.

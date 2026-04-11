@@ -1,7 +1,7 @@
 pathway_errorbar_fixed = function (abundance, daa_results_df, Group, ko_to_kegg = FALSE, 
-                            wrap_label = F, wraplength=20, fc_cutoff = 0, order_by_log = F,
-                            p_values_threshold = 0.05, order = "group", select = NULL, 
-                            p_value_bar = TRUE, colors = NULL, x_lab = NULL){
+                                   wrap_label = F, wraplength=20, fc_cutoff = 0, order_by_log = F,
+                                   p_values_threshold = 0.05, order = "group", select = NULL, 
+                                   p_value_bar = TRUE, colors = NULL, x_lab = NULL){
   
   # abundance = ko_filt;
   # daa_results_df = daa_annotated_results_df; order_by_log = T;
@@ -106,7 +106,7 @@ pathway_errorbar_fixed = function (abundance, daa_results_df, Group, ko_to_kegg 
   
   sub_relative_abundance_mat <- relative_abundance_mat[rownames(relative_abundance_mat) %in% 
                                                          daa_results_filtered_sub_df$feature, ,drop=F]
- 
+  
   error_bar_matrix <- cbind(sample = colnames(sub_relative_abundance_mat), 
                             group = Group, t(sub_relative_abundance_mat))
   error_bar_df <- as.data.frame(error_bar_matrix)
@@ -161,7 +161,7 @@ pathway_errorbar_fixed = function (abundance, daa_results_df, Group, ko_to_kegg 
     error_bar_pivot_longer_tibble_summarised_ordered$pathway_class <- rep(daa_results_filtered_sub_df$pathway_class, 
                                                                           each = length(levels(factor(error_bar_pivot_longer_tibble_summarised_ordered$group))))
   }
-
+  
   if(order_by_log == F){
     error_bar_pivot_longer_tibble_summarised_ordered$name <- factor(error_bar_pivot_longer_tibble_summarised_ordered$name, 
                                                                     levels = rev(daa_results_filtered_sub_df$feature))
@@ -169,7 +169,7 @@ pathway_errorbar_fixed = function (abundance, daa_results_df, Group, ko_to_kegg 
     error_bar_pivot_longer_tibble_summarised_ordered$name <- factor(error_bar_pivot_longer_tibble_summarised_ordered$name, 
                                                                     levels = rev(log_order))
   }
-
+  
   if('pathway_name' %in% names(daa_results_filtered_sub_df)){
     daa_results_filtered_sub_df$pathway_name = sapply(daa_results_filtered_sub_df$pathway_name, function(x) str_split(x,' \\[')[[1]][1] %>% str_trim())
     if(wrap_label==T){
@@ -183,7 +183,7 @@ pathway_errorbar_fixed = function (abundance, daa_results_df, Group, ko_to_kegg 
                            position = ggplot2::position_dodge(width = 0.8), 
                            width = 0.5, size = 0.5, color = "black") + 
     ggplot2::geom_bar(stat = "identity", 
-                                                                                                                                                                 position = ggplot2::position_dodge(width = 0.8), width = 0.8) + 
+                      position = ggplot2::position_dodge(width = 0.8), width = 0.8) + 
     GGally::geom_stripped_cols(width = 10) + ggplot2::scale_fill_manual(values = colors) + 
     ggplot2::scale_color_manual(values = colors) + ggprism::theme_prism() + 
     ggplot2::scale_x_continuous(expand = c(0, 0))+ #, guide = "prism_offset_minor") + 
@@ -228,7 +228,7 @@ pathway_errorbar_fixed = function (abundance, daa_results_df, Group, ko_to_kegg 
       bar_errorbar <- bar_errorbar + ggplot2::annotation_custom(
         grob = grid::rectGrob(gp = grid::gpar(col = pCol[i],fill = pFill[i], lty = NULL, lwd = NULL, alpha = 0.2)),
         xmin = ggplot2::unit(-2, "native"), xmax = ggplot2::unit(0, "native"), ymin = ggplot2::unit(ymin[i], "native"), 
-                                                                ymax = ggplot2::unit(ymax[i], "native"))
+        ymax = ggplot2::unit(ymax[i], "native"))
     }
   }
   daa_results_filtered_sub_df <- cbind(daa_results_filtered_sub_df, 
@@ -247,7 +247,7 @@ pathway_errorbar_fixed = function (abundance, daa_results_df, Group, ko_to_kegg 
     daa_results_filtered_sub_df$feature <- factor(daa_results_filtered_sub_df$feature, 
                                                   levels = rev(log_order))
   }
-
+  
   p_values_bar <- daa_results_filtered_sub_df %>% 
     ggplot2::ggplot(ggplot2::aes(feature, log_2_fold_change, fill = group_nonsense)) + 
     ggplot2::geom_bar(stat = "identity", position = ggplot2::position_dodge(width = 0.8), width = 0.8) + 
@@ -275,11 +275,11 @@ pathway_errorbar_fixed = function (abundance, daa_results_df, Group, ko_to_kegg 
                                                  pathway_class = rev(unique(daa_results_filtered_sub_df$pathway_class))))
     pathway_class_plot_df$pathway_class = sapply(pathway_class_plot_df$pathway_class, function(x) str_split(x,';')[[1]] %>% .[length(.)] %>% str_trim())
     pathway_class_plot_df$pathway_class = sapply(pathway_class_plot_df$pathway_class, function(x) str_remove_all(x,'KEGG Orthology [(]KO[)] \\[BR:ko00001\\];  '))
-
+    
     pathway_class_plot_df$pathway_class_y <- as.numeric(pathway_class_plot_df$pathway_class_y)
     if(nrow(pathway_class_plot_df)==2){ 
       pathway_class_plot_df$pathway_class_y = 1; pathway_class_plot_df = pathway_class_plot_df[1,,drop=F]
-      }
+    }
     pathway_class_annotation <- pathway_class_plot_df %>% 
       ggplot2::ggplot(ggplot2::aes(nonsense, pathway_class_y)) + 
       ggplot2::geom_text(ggplot2::aes(nonsense, pathway_class_y, 
@@ -295,7 +295,7 @@ pathway_errorbar_fixed = function (abundance, daa_results_df, Group, ko_to_kegg 
   daa_results_filtered_sub_df$p_adjust <- as.character(signif(daa_results_filtered_sub_df$p_adjust,2))
   daa_results_filtered_sub_df$unique <- nrow(daa_results_filtered_sub_df) - 
     seq_len(nrow(daa_results_filtered_sub_df)) + 1
-
+  
   p_annotation <- daa_results_filtered_sub_df %>% 
     ggplot2::ggplot(ggplot2::aes(group_nonsense,p_adjust)) + 
     ggplot2::geom_text(ggplot2::aes(group_nonsense, unique, label = p_adjust), size = 5, 
