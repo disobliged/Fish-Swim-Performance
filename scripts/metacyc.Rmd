@@ -9,6 +9,7 @@ output: html_document
 library(tidyverse)
 library(phyloseq)
 library(ggpicrust2)
+library(ggrepel)
 ```
 # Picrust Analysis of MetaCyc
 This pipeline will be a complex analysis of the Picrust output we did on the class server.
@@ -23,6 +24,7 @@ meta = readRDS('../datasets/ps_filtered.rds') %>% .@sam_data %>% data.frame() %>
 
 metacyc = read_delim('../datasets/picrust_output/pathways_out/path_abun_unstrat.tsv')
 ```
+
 ```{r Group}
 fast = c('accelerator','crusier sprinter','manoeuvrer')
 meta = meta %>%
@@ -35,10 +37,24 @@ meta = meta %>%
   ),
   .after = swim_performance
   )
-# meta_fast_slow = meta %>% 
-#   filter(
-#     swim_group == c('Fast','Slow')
-#   )
+
+### QUESTION IS HERE ###
+# Which pairwise comparison should I use (or all three)?
+
+meta_fast_slow = meta %>%
+  filter(
+    swim_group == c('Fast','Slow')
+  )
+
+meta_mod_slow = meta %>%
+  filter(
+    swim_group == c('Moderate','Slow')
+  )
+
+meta_fast_mod = meta %>%
+  filter(
+    swim_group == c('Fast','Moderate')
+  )
 ```
 
 
@@ -47,14 +63,15 @@ meta = meta %>%
 ```{r DAA}
 
 # 1. Subset metadata to hindgut only
-hindgut <- meta_fast_slow %>% filter(sample_type == "hindgut")
+
+### QUESTION HERE ###
+# Change meta to the variables above
+# Which comparision should I use?
+hindgut <- meta %>% filter(sample_type == "hindgut")
 
 # 2. Keep only hindgut samples that actually exist in MetaCyc
 valid_samples <- intersect(hindgut$sample_name, colnames(metacyc))
 
-# valid_samples = metacyc [
-#   ,hindgut$sample_name
-# ]
 
 # 3. Filter MetaCyc to those samples
 metacyc_filt <- metacyc %>% 
@@ -72,7 +89,7 @@ daa_results_df = pathway_daa(abundance = metacyc_filt,
                              daa_method = "LinDA", 
                              select = NULL, reference = NULL)
 
-saveRDS(daa_results_df, 'meta_fish_daa_results_df.rds')
+# saveRDS(daa_results_df, 'meta_fish_daa_results_df.rds')
 ```
 
 ## Convert to MetaCyc
@@ -80,43 +97,23 @@ saveRDS(daa_results_df, 'meta_fish_daa_results_df.rds')
 ```{r}
 # Annotate pathway results using MetaCyc
 
-# daa_annotated_results_df = pathway_annotation(pathway = "MetaCyc",
-#                                               daa_results_df = daa_results_df,
-#                                               ko_to_kegg = FALSE)
-# 
-# saveRDS(daa_annotated_results_df,'fish_daa_annotated_results_df.rds')
+daa_annotated_results_df = pathway_annotation(pathway = "MetaCyc",
+                                              daa_results_df = daa_results_df,
+                                              ko_to_kegg = FALSE)
 
-daa_annotated_results_df<-readRDS(daa_annotated_results_df,'fish_daa_annotated_results_df.rds')
+saveRDS(daa_annotated_results_df,'../datasets/fish_daa_meta_annotated_results_df.rds')
+
+#daa_annotated_results_df<-readRDS('../datasets/fish_daa_meta_annotated_results_df.rds')
 ```
 
 
 ## View Sample Similarity
 
-```{r PCA}
-
-hindgut1 <- hindgut %>%
-  mutate(
-    Swim_Performance = case_when(
-      swim_performance %in% c("accelerator", "crusier sprinter") ~ "Fast",
-      swim_performance %in% c("burrowing", "flow refuging", "manoeuvrer") ~ "Slow",
-      swim_performance == "generalist" ~ "Moderate",
-      TRUE ~ NA_character_
-    )
-  )
-?pathway_pca
-pca = pathway_pca(abundance = metacyc_filt,
-            metadata = hindgut,
-            group = "swim_group",
-            colors = c('#8E7CA6','#E07A9A')
-            )
-pca
-
-ggsave('../plots/pca.jpg',
-       plot = pca,
-       height=8.5, width = 14)
-```
-
 ```{r Volcano Plot}
+# This code is optimized for the slow fast comparison
+
+### TO FIX ###
+# Figure out ggrepel here
 volcano_meta = ggplot(data = daa_annotated_results_df, aes(x=log2FoldChange, y = -log10(p_adjust)))+
   geom_point(colour = '#8E7CA6')+
   geom_text(
@@ -127,12 +124,13 @@ volcano_meta = ggplot(data = daa_annotated_results_df, aes(x=log2FoldChange, y =
         ''
       )
     ),
+    angle = 45,
     hjust = -0.05,
     vjust = -0.5
   )+
   aes(alpha = 0.25)+
   geom_hline(yintercept = -log10(0.05), linetype = 'dashed', color = '#E07A9A')+
-  ylim(NA,2)+
+  ylim(NA,2.5)+
   theme(legend.position='none')
 volcano_meta
 ggsave('../plots/meta_volcano.jpg',
