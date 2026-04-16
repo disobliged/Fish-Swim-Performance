@@ -119,6 +119,17 @@ ggsave('../plots/pca.jpg',
 ```{r Volcano Plot}
 volcano_meta = ggplot(data = daa_annotated_results_df, aes(x=log2FoldChange, y = -log10(p_adjust)))+
   geom_point(colour = '#8E7CA6')+
+  geom_text(
+    aes(
+      label = ifelse(
+        -log10(p_adjust)>-log10(0.05),
+        as.character(description),
+        ''
+      )
+    ),
+    hjust = -0.05,
+    vjust = -0.5
+  )+
   aes(alpha = 0.25)+
   geom_hline(yintercept = -log10(0.05), linetype = 'dashed', color = '#E07A9A')+
   ylim(NA,2)+
