@@ -141,7 +141,19 @@ ggsave('../plots/pathway_box.jpg',
 
 volcano_meta = ggplot(data = daa_annotated_results_df, aes(x=log2FoldChange, y = -log10(p_adjust)))+
   geom_point(colour = '#8E7CA6')+
-  geom_text(
+  aes(alpha = 0.25)+
+  geom_hline(yintercept = -log10(0.05), linetype = 'dashed', color = '#E07A9A')+
+  ylim(NA,2.5)+
+  theme(legend.position='none')+
+  labs(x=TeX('$Log_2$ Fold Change'), y=TeX('$-Log_{10}$ P-Adjusted Value'))
+volcano_meta
+
+ggsave('../plots/meta_volcano.jpg',
+       plot = volcano_meta,
+       height=8.5, width = 14)
+
+volcano_meta_labelled = volcano_meta+
+    geom_text(
     aes(
       label = ifelse(
         -log10(p_adjust)>-log10(0.05),
@@ -152,16 +164,12 @@ volcano_meta = ggplot(data = daa_annotated_results_df, aes(x=log2FoldChange, y =
     angle = 45,
     hjust = -0.05,
     vjust = -0.5
-  )+
-  aes(alpha = 0.25)+
-  geom_hline(yintercept = -log10(0.05), linetype = 'dashed', color = '#E07A9A')+
-  ylim(NA,2.5)+
-  theme(legend.position='none')+
-  labs(x=TeX('$Log_2$ Fold Change'), y=TeX('$-Log_{10}$ P-Adjusted Value'))
-volcano_meta
-ggsave('../plots/meta_volcano.jpg',
-       plot = volcano_meta,
+  )
+
+ggsave('../plots/meta_volcano_labelled.jpg',
+       plot = volcano_meta_labelled,
        height=8.5, width = 14)
+
 #log2fold is Change in abundance
 #Slow/fast
 # more abundant slow in + log2 changes
