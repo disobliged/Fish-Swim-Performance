@@ -10,6 +10,7 @@ library(tidyverse)
 library(phyloseq)
 library(ggpicrust2)
 library(ggrepel)
+library(latex2exp)
 ```
 # Picrust Analysis of MetaCyc
 This pipeline will be a complex analysis of the Picrust output we did on the class server.
@@ -117,11 +118,15 @@ box = counts %>%
 path_interest = box %>% 
   filter(pathway == c("PWY-4702","PWY-7579"))
 ?facet_wrap
-ggplot(path_interest, aes(x = swim_group, y = count, fill = swim_group))+
+boxplot = ggplot(path_interest, aes(x = swim_group, y = count, fill = swim_group))+
   geom_boxplot()+
   scale_fill_manual(values = c('#8E7CA6',"#fcba65"))+
   facet_wrap(~ pathway)+
-  labs(x='Pathway', y='Count')
+  labs(x='Swim Speed', y='Count')
+
+ggsave('../plots/pathway_box.jpg',
+       plot = boxplot,
+       height=8.5, width = 14)
 
 # pathways overrepresented in fast group
 #briefly describe pathways
@@ -151,7 +156,8 @@ volcano_meta = ggplot(data = daa_annotated_results_df, aes(x=log2FoldChange, y =
   aes(alpha = 0.25)+
   geom_hline(yintercept = -log10(0.05), linetype = 'dashed', color = '#E07A9A')+
   ylim(NA,2.5)+
-  theme(legend.position='none')
+  theme(legend.position='none')+
+  labs(x=TeX('$Log_2$ Fold Change'), y=TeX('$-Log_{10}$ P-Adjusted Value'))
 volcano_meta
 ggsave('../plots/meta_volcano.jpg',
        plot = volcano_meta,
