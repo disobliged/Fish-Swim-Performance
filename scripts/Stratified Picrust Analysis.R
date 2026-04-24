@@ -91,7 +91,7 @@ strat_rel_slow = strat_slow %>%
 
 # If we want to analyze everything without subsetting groups
 strat_rel = strat_hindgut %>%
-  group_by(sample())
+  group_by(sample) %>%
   mutate(rel_abun = taxon_function_abun/sum(taxon_function_abun)) %>%
   ungroup()
 
