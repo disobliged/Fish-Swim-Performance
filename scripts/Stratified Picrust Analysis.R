@@ -357,7 +357,7 @@ plot_avg_fast <- strat_prop_grouped_fast %>%
         axis.text.x = element_text(angle = 45, hjust = 1),
         legend.title = element_blank(),
         legend.key.size = unit(1, "cm"),
-        legend.text = element_text(size = 16)) +
+        legend.text = element_text(size = 25)) +
   xlab(NULL)
 
 plot_avg_fast
@@ -373,7 +373,7 @@ plot_avg_moderate <- strat_prop_grouped_moderate %>%
         axis.text.x = element_text(angle = 45, hjust = 1),
         legend.title = element_blank(),
         legend.key.size = unit(1, "cm"),
-        legend.text = element_text(size = 16)) +
+        legend.text = element_text(size = 25)) +
   xlab(NULL)
 
 plot_avg_moderate
@@ -388,7 +388,7 @@ plot_avg_slow <- strat_prop_grouped_slow %>%
         axis.text.x = element_text(angle = 45, hjust = 1),
         legend.title = element_blank(),
         legend.key.size = unit(1, "cm"),
-        legend.text = element_text(size = 16)) +
+        legend.text = element_text(size = 25)) +
   xlab(NULL)
 
 plot_avg_slow
@@ -403,7 +403,7 @@ plot_avg <- strat_prop_grouped %>%
         axis.text.x = element_text(angle = 45, hjust = 1),
         legend.title = element_blank(),
         legend.key.size = unit(1, "cm"),
-        legend.text = element_text(size = 16)) +
+        legend.text = element_text(size = 25)) +
   xlab(NULL)
 
 plot_avg
