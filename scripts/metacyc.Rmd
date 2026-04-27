@@ -70,7 +70,7 @@ daa_results_df = pathway_daa(abundance = metacyc_filt,
                              daa_method = "LinDA", 
                              select = NULL, reference = NULL)
 
-# saveRDS(daa_results_df, 'meta_fish_daa_results_df.rds')
+# saveRDS(daa_results_df, '../datasets/meta_fish_daa_results_df.rds')
 ```
 
 ## Convert to MetaCyc
@@ -112,7 +112,7 @@ path_interest = box %>%
 
 boxplot = ggplot(path_interest, aes(x = swim_group, y = count, fill = swim_group))+
   geom_boxplot()+
-  geom_jitter(color = 'black', alpha = 0.6)+
+  geom_jitter(color = 'black', size = 3,alpha = 0.6)+
   scale_fill_manual(values = c('#8E7CA6',"#fcba65"))+
   facet_wrap(~ pathway)+
   labs(x='Swim Speed', y='Count')
@@ -160,10 +160,10 @@ ggsave('../plots/meta_volcano_labelled.jpg',
        plot = volcano_meta_labelled,
        height=8.5, width = 14)
 
-#log2fold is Change in abundance
-#Slow/fast
+# log2fold is Change in abundance
+# Slow/fast
 # more abundant slow in + log2 changes
-# More aboundant fast in - log2change
+# More abundant fast in - log2change
 # No need for log2fold cut off, enough change as is, does not affect figure interpretation.
 ```
 

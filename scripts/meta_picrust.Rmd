@@ -10,7 +10,8 @@ library(tidyverse)
 library(phyloseq)
 library(ggpicrust2)
 ```
-# Picrust Analysis of MetaCyc
+# Principal Component Analysis of MetaCyc
+
 This pipeline will be a complex analysis of the Picrust output we did on the class server.
 
 ## Input and Convert the Needed Files
@@ -42,142 +43,6 @@ metacyc_filt <- metacyc %>%
 
 # 4. Also update hindgut metadata to match
 hindgut <- hindgut %>% filter(sample_name %in% valid_samples)
-
-#draft-- Filter to only compare hindgut microbiome
-hindgut = meta %>% filter(sample_type %in% c('hindgut'))
-metacyc_filt = metacyc %>% select(all_of(hindgut$sample_name))
-
-metacyc_filt <- metacyc %>%
-  column_to_rownames("pathway") %>%      
-  select(all_of(meta$sample_name))       
-
-# Perform pathway differential abundance analysis (DAA) using LinDA method
-daa_results_df = pathway_daa(abundance = metacyc_filt,
-                             metadata = hindgut, 
-                             group = "swim_performance", 
-                             daa_method = "LinDA", 
-                             select = NULL, reference = NULL)
-
-saveRDS(daa_results_df, 'meta_fish_daa_results_df.rds')
-```
-
-## Convert to MetaCyc
-
-```{r}
-# Annotate pathway results using MetaCyc
-
-daa_annotated_results_df = pathway_annotation(pathway = "MetaCyc",
-                                              daa_results_df = daa_results_df,
-                                              ko_to_kegg = FALSE)
-
-saveRDS(daa_annotated_results_df,'fish_daa_annotated_results_df.rds')
-
-#daa_annotated_results_df<-readRDS(daa_annotated_results_df,'fish_daa_annotated_results_df.rds')
-```
-
-
-## MetaCyc Error Barplot 
-```{r Plot}
-source("ggpicrust2_errorbar_function_fixed.R")
-
-peb <- pathway_errorbar_fixed(
-  abundance = metacyc_filt,
-  daa_results_df = daa_annotated_results_df,
-  Group = hindgut$swim_performance,
-  wrap_label = TRUE,
-  wraplength = 60,
-  fc_cutoff = 1,              
-  p_values_threshold = 0.05,  
-  order_by_log = FALSE,
-  order = "pathway_class",
-  ko_to_kegg = FALSE,
-  p_value_bar = TRUE,
-  x_lab = "pathway_name"
-)
-
-peb
-
-ggsave("MetaCyc_Error_Bar.png",
-       plot = peb, width = 18, height = 10)
-
-
-```
-## MetaCyc Heatmap
-
-```{r MetaCyc heatmap plot}
-# Compute relative abundance
-metacyc_relab <- metacyc_filt %>%
-  apply(2, function(x) x / sum(x)) %>%
-  as.data.frame()
-
-# Compute variance across samples
-var_df <- metacyc_relab %>%
-  mutate(var = apply(., 1, var)) %>%
-  arrange(desc(var)) %>%
-  slice(1:30) %>%
-  select(-var)
-
-# Correlation matrix
-stats <- var_df %>%
-  t() %>%
-  cor(method = "pearson")
-
-# Heatmap
-color_palette <- colorRampPalette(c("#5E3C99", "white", "#F28E2B"))(40)
-breaks <- seq(-1, 1, length.out = 41)
-
-pheatmap(
-  stats,
-  clustering_distance_rows = "euclidean",
-  clustering_distance_cols = "euclidean",
-  clustering_method = "complete",
-  color = color_palette,
-  breaks = breaks,
-  fontsize_row = 10,
-  fontsize_col = 10,
-  filename = "MetaCyc_Heatmap.png",
-  height = 9,
-  width = 9
-)
-
-
-
-```
-## View Identical Features - doesn't work with MetaCyc 
-
-```{r Identical Features}
-sig_features = daa_annotated_results_df %>% 
-  filter(p_adjust < 5e-11, abs(log2FoldChange) > 5) %>% 
-  pull('feature') %>% unique()
-
-meta_relab = read.delim('path_abun_unstrat.tsv',row.names = 1) %>% 
-  apply(2,function(x) x/sum(x)) %>% as.data.frame()
-colSums(meta_relab) # Should be all 1
-
-stats = meta_relab %>% t() %>%  # switch rows and columns
-  as.data.frame() %>% # Lets us use select()
-  select(all_of(sig_features)) %>% 
-  cor(method = 'pearson') #Pearson tests between every feature pair
-
-# Define the color palette
-color_palette <- colorRampPalette(c("blue", "white", "red"))(40)
-
-# Define breaks for the color scale
-breaks <- seq(-1, 1, length.out = 41)  # 40 colors + 1 for the endpoint
-
-# Create the clustered heatmap with centered color at zero
-library('pheatmap')
-pheatmap(stats, 
-         clustering_distance_rows = "euclidean",  
-         clustering_distance_cols = "euclidean", 
-         clustering_method = "complete",          
-         color = color_palette, 
-         breaks = breaks,
-         main = '',
-         fontsize_row = 10, 
-         fontsize_col = 10,
-         filename = "KEGG Heatmap.png",
-         height= 9, width = 9)
 ```
 
 ## View Sample Similarity
