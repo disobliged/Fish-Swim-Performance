@@ -40,7 +40,7 @@ plot_basic = relab %>%
   geom_col(position = 'stack')
 
 plot_basic
-
+```
 
 ```{r with formatting}
 plot_formatted = relab %>% 
@@ -58,7 +58,7 @@ plot_formatted = relab %>%
   xlab(NULL)
 
 plot_formatted
-
+```
 
 ```{r abundance filtered}
 
@@ -76,7 +76,9 @@ to_change
 # Changing the phylum name of these ones to '<1%'
 
 relab_modified = relab
+unique(relab_modified$Phylum
 relab_modified$Phylum[relab_modified$OTU %in% to_change] = '<1%'
+unique(relab_modified$Phylum)
 
 
 #Plotting it again
@@ -94,8 +96,10 @@ plot_abfilt = relab_modified %>%
   xlab(NULL)
 
 plot_abfilt
+```
 
 
+```{r averaged plot}
 #Averaging abundance by group
 
 averaged = relab_modified %>% 
