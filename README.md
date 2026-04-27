@@ -16,7 +16,8 @@ Analyses conducted in R to research how the hindgut microbiome affects fish swim
   <img src="https://contrib.rocks/image?repo=disobliged/Fish-Swim-Performance" />
 </a>
 
-*Made with [contrib.rocks](https://contrib.rocks).*
+
+*Contributor list made with [contrib.rocks](https://contrib.rocks).*
 
 ### Mentors
 We received generous support from [Avril Metcalfe-Roach](https://github.com/armetcal) and [Imogen Porter](https://github.com/iporter-16) in the creation of our project. We thank them for their support during the term.
