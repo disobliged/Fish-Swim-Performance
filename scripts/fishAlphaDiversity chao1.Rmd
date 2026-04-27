@@ -12,7 +12,7 @@ library(indicspecies)
 ```
 # Alpha Diversity Plot
 
-The alpha diversity for this dataset will be calculated using the Shannon Index and compared pairwise using the Wilcoxon's ranked-sums test. This script will use the phyloseq object created previously.
+The alpha diversity for this dataset will be calculated using the Chao1 Index and compared pairwise using the Wilcoxon's ranked-sums test. This script will use the phyloseq object created previously.
 
 ```{r Preliminary Data Analysis}
 # Set the seed
