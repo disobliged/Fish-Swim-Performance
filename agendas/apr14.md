@@ -4,8 +4,7 @@ Research Question:
 
 ## Manuscript Draft - Minutes by SD
 
-- Go over manuscript draft - https://docs.google.com/document/d/1xqjqw3uDQjgkOmINYcQdKZzbYT_bLLjB/edit?usp=sharing&ouid=105196612420546302594&rtpof=true&sd=true
-
+- Go over manuscript draft 
 ### Notes 
 - "Family" is not capitalized
 - Cite papers that show species that have specific gut microbiota just to make it clear that it is not hypothetical
