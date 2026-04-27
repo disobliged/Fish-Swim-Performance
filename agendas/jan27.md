@@ -2,7 +2,7 @@
 We have narrowed down our research project to the fish dataset, with our research question as: 
 > Do the species of fish and microbial diversity affect swimming performance, and at what depth do they reside?
 
-##  Fish Dataset and Group Assignment 1 - Minutes by Izaak Yip
+##  Fish Dataset and Group Assignment 1 - Minutes by IY
 
 ### Fish
 > Do the species of fish and microbial diversity affect swimming performance, and at what depth do they reside?
