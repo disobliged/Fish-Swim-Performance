@@ -21,7 +21,7 @@ ps_rel = ps %>% microbiome::transform('compositional')
 # Filter taxa
 ps_filt = prune_taxa(top_10,ps_rel)
 
-
+#Splitting taxonomy into levels 
 tax_genus = taxonomy %>%
   separate(col = Taxon, sep = "; " , into = c("Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species"))
 
@@ -80,10 +80,10 @@ E(g_w)$weight = 1 / pmax(E(g_w)$weight, .Machine$double.eps)
 # Compute betweenness using weights as distances
 btw_w <- betweenness(g_w, weights = E(g_w)$weight, normalized = TRUE)
 
-btw_w %>% sort # now a different taxon is the most important!
+btw_w %>% sort 
 
 
-#HEATMAP ~~~~~~~~~~~~~~~~~~~~~~
+#HEATMAP visualization ~~~~~~~~~~~~~~~~~~~~~~
 
 #install.packages(c("pheatmap"))
 library(pheatmap)
