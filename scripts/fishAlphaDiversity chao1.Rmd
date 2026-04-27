@@ -72,9 +72,6 @@ fishShannon = plot_richness(
 pData = fishShannon$data
 str(pData)
 
-### HELP SETTTING UP THE FILTERING
-# ?ifelse
-
 fast = c('accelerator','crusier sprinter','manoeuvrer')
 #moderate = c('generalist')
 #slow = c('flow refuging', 'burrowing')
